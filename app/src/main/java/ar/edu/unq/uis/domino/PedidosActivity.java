@@ -40,6 +40,7 @@ public class PedidosActivity extends AppCompatActivity {
     RecyclerView pedidosRecyclerView;
     PedidosAdapter pedidosAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private View mensajeVacio;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class PedidosActivity extends AppCompatActivity {
         this.pedidosAdapter = new PedidosAdapter();
         this.pedidosRecyclerView.setAdapter(pedidosAdapter);
         this.pedidosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.mensajeVacio = findViewById(R.id.mensaje_vacio);
         populateAdapter();
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,6 +78,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
                 pedidosAdapter.pedidos = response.body();
+                mensajeVacio.setVisibility(pedidosAdapter.pedidos.size() == 0 ? View.VISIBLE : View.GONE);
                 Log.d("PedidosActivity", "Cargados " + pedidosAdapter.pedidos.size() + " pedidos");
                 pedidosAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);

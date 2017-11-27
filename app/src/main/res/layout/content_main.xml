@@ -16,14 +16,34 @@
         tools:context="ar.edu.unq.uis.domino.PedidosActivity"
         tools:showIn="@layout/activity_main">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/pedidos"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/mensaje_vacio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="No se encontraron pedidos"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#cacaca"
+                android:layout_marginTop="30dp"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pedidos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+        </FrameLayout>
+
+
     </android.support.v4.widget.NestedScrollView>
+
 </android.support.v4.widget.SwipeRefreshLayout>
 
 

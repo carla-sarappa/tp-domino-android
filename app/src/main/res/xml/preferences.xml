@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:defaultValue="http://192.168.0.5:9000"
+        android:key="server_url"
+        android:summary="%s"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Server" />
+    <EditTextPreference
+        android:defaultValue="4"
+        android:key="user_id"
+        android:numeric="integer"
+        android:summary="%s"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="User ID" />
+</PreferenceScreen>

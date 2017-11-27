@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unq.uis.domino.model.Pedido;
+import ar.edu.unq.uis.domino.services.PedidoService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Carla Sarappa on 24/11/2017.
@@ -24,6 +31,7 @@ import ar.edu.unq.uis.domino.model.Pedido;
 public class PedidosActivity extends AppCompatActivity {
 
     RecyclerView pedidosRecyclerView;
+    PedidosAdapter pedidosAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +40,31 @@ public class PedidosActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.pedidosRecyclerView = findViewById(R.id.pedidos);
-        this.pedidosRecyclerView.setAdapter(new PedidosAdapter());
+        this.pedidosAdapter = new PedidosAdapter();
+        this.pedidosRecyclerView.setAdapter(pedidosAdapter);
         this.pedidosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        populateAdapter();
+    }
+
+    public void populateAdapter(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.5:9000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PedidoService service = retrofit.create(PedidoService.class);
+        service.getPedidos(4).enqueue(new Callback<List<Pedido>>() {
+            @Override
+            public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
+                pedidosAdapter.pedidos = response.body();
+                pedidosAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<List<Pedido>> call, Throwable t) {
+                Log.e("pedidosActivity", "getPedidos() failed", t);
+            }
+        });
     }
 
     public static class PedidosAdapter extends RecyclerView.Adapter<PedidoViewHolder>{
@@ -84,7 +115,7 @@ public class PedidosActivity extends AppCompatActivity {
         public void populate(Pedido pedido){
             nombre.setText(pedido.getNombre());
             direccion.setText(pedido.getDireccion());
-            precio.setText(NumberFormat.getCurrencyInstance().format(pedido.getPrecio()));
+            precio.setText(NumberFormat.getCurrencyInstance().format(pedido.getMonto()));
         }
     }
 }

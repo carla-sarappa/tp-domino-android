@@ -1,6 +1,8 @@
 package ar.edu.unq.uis.domino.model;
 
-public class Pizza {
+import java.io.Serializable;
+
+public class Pizza implements Serializable {
     String nombre;
     Double precio;
 }

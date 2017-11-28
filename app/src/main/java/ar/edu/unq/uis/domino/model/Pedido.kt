@@ -1,11 +1,13 @@
 package ar.edu.unq.uis.domino.model
 
+import java.io.Serializable
+
 /**
  * Created by Carla on 27/11/2017.
  */
 
 
-public class Pedido {
+public class Pedido: Serializable {
     var platos: List<Plato>? = null
     var cliente: Int? = null
     var aclaraciones: String? = null

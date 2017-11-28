@@ -77,9 +77,9 @@ public class PedidosActivity extends AppCompatActivity {
         service.getPedidos(userId).enqueue(new Callback<List<Pedido>>() {
             @Override
             public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
-                pedidosAdapter.pedidos = response.body();
-                mensajeVacio.setVisibility(pedidosAdapter.pedidos.size() == 0 ? View.VISIBLE : View.GONE);
-                Log.d("PedidosActivity", "Cargados " + pedidosAdapter.pedidos.size() + " pedidos");
+                pedidosAdapter.elementos = response.body();
+                mensajeVacio.setVisibility(pedidosAdapter.elementos.size() == 0 ? View.VISIBLE : View.GONE);
+                Log.d("PedidosActivity", "Cargados " + pedidosAdapter.elementos.size() + " pedidos");
                 pedidosAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -110,39 +110,49 @@ public class PedidosActivity extends AppCompatActivity {
         }
     }
 
-    public static class PedidosAdapter extends RecyclerView.Adapter<PedidoViewHolder>{
-        List<Pedido> pedidos = new ArrayList<>();
-
-        public PedidosAdapter() {
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-            this.pedidos.add(new Pedido());
-        }
+    public abstract static class DominoListAdapter<T> extends RecyclerView.Adapter<DominoViewHolder<T>>{
+        List<T> elementos = new ArrayList<>();
 
         @Override
-        public PedidoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public DominoViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pedido, parent, false);
 
-            return new PedidoViewHolder(view);
+            return createViewHolder(view);
         }
 
+        public abstract DominoViewHolder<T> createViewHolder(View view);
+
         @Override
-        public void onBindViewHolder(PedidoViewHolder holder, int position) {
-            holder.populate(pedidos.get(position));
+        public void onBindViewHolder(DominoViewHolder<T> holder, int position) {
+            holder.populate(elementos.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return pedidos.size();
+            return elementos.size();
         }
     }
 
-    public static class PedidoViewHolder extends RecyclerView.ViewHolder{
+    public static class PedidosAdapter extends DominoListAdapter<Pedido>{
+
+        @Override
+        public DominoViewHolder<Pedido> createViewHolder(View view) {
+            return new PedidoViewHolder(view);
+        }
+
+
+    }
+
+    public abstract static class DominoViewHolder<T> extends RecyclerView.ViewHolder{
+
+        public DominoViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public abstract void populate(T t);
+    }
+
+    public static class PedidoViewHolder extends DominoViewHolder<Pedido>{
         TextView nombre;
         TextView direccion;
         TextView precio;
@@ -155,10 +165,20 @@ public class PedidosActivity extends AppCompatActivity {
             this.precio = itemView.findViewById(R.id.precio);
         }
 
-        public void populate(Pedido pedido){
+        public void populate(final Pedido pedido){
             nombre.setText(pedido.getNombre());
             direccion.setText(pedido.getDireccion());
             precio.setText(NumberFormat.getCurrencyInstance().format(pedido.getMonto()));
+            this.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(DetailActivity.PEDIDO, pedido);
+                    intent.putExtras(bundle);
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 }

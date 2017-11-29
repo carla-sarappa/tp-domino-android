@@ -12,8 +12,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".PedidosActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="Domino Client"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:taskAffinity="ar.edu.unq.uis.domino.PedidosActivity">
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AdminActivity"
+            android:label="Domino Admin"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:taskAffinity="ar.edu.unq.uis.domino.AdminActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -77,7 +77,7 @@ public class DetailActivity extends AppCompatActivity {
                     (extra)-> extra.nombre,
                     ", ",
                     " y "));
-            TextUtils.setTextAsCurrency(precio, plato.getPrecio());
+            TextUtils.setTextAsCurrency(precio, plato.getMonto());
         }
     }
 }

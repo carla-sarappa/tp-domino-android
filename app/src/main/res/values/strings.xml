@@ -4,4 +4,6 @@
         "Bibo.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="delivery">Delivery</string>
+    <string name="retira">Retiro por el local</string>
 </resources>

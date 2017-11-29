@@ -2,6 +2,7 @@ package ar.edu.unq.uis.domino.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,18 +20,11 @@ public class Plato implements Serializable {
         return pizza;
     }
 
-
+    public double getPrecio() {
+        return precio;
+    }
 
     public List<IngredienteDistribuido> getExtras() {
         return extras;
-    }
-
-    public String getExtrasAsString(){
-        return getExtras().stream().map((extra)-> extra.ingrediente).collect(Collectors.joining(", "));
-
-    }
-
-    public double getPrecio() {
-        return precio;
     }
 }

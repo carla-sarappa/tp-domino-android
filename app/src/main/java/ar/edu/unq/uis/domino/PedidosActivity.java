@@ -15,9 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 import ar.edu.unq.uis.domino.model.Pedido;
@@ -115,31 +113,21 @@ public class PedidosActivity extends AppCompatActivity {
     }
 
     public static class PedidoViewHolder extends DominoViewHolder<Pedido>{
-        TextView nombre;
-        TextView direccion;
-        TextView precio;
-
 
         public PedidoViewHolder(View itemView) {
             super(itemView);
-            this.nombre = itemView.findViewById(R.id.nombre);
-            this.direccion = itemView.findViewById(R.id.descripcion);
-            this.precio = itemView.findViewById(R.id.precio);
         }
 
         public void populate(final Pedido pedido){
             nombre.setText(pedido.getNombre());
-            direccion.setText(pedido.getDireccion());
+            descripcion.setText(pedido.getDireccion());
             TextUtils.setTextAsCurrency(precio, pedido.getMonto());
-            this.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(DetailActivity.PEDIDO, pedido);
-                    intent.putExtras(bundle);
-                    view.getContext().startActivity(intent);
-                }
+            this.itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(DetailActivity.PEDIDO, pedido);
+                intent.putExtras(bundle);
+                view.getContext().startActivity(intent);
             });
         }
     }

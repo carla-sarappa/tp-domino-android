@@ -8,6 +8,18 @@ import java.io.Serializable;
 
 public class FormaDeEnvio implements Serializable {
     String nombre;
-    String direccion;
-    Double costo;
+    String direccion = "";
+    Double costo = 0.0;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public Double getCosto() {
+        return costo;
+    }
 }

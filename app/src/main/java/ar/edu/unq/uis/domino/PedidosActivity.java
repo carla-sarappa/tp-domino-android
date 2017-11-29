@@ -11,16 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unq.uis.domino.model.Pedido;
@@ -110,46 +107,11 @@ public class PedidosActivity extends AppCompatActivity {
         }
     }
 
-    public abstract static class DominoListAdapter<T> extends RecyclerView.Adapter<DominoViewHolder<T>>{
-        List<T> elementos = new ArrayList<>();
-
-        @Override
-        public DominoViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pedido, parent, false);
-
-            return createViewHolder(view);
-        }
-
-        public abstract DominoViewHolder<T> createViewHolder(View view);
-
-        @Override
-        public void onBindViewHolder(DominoViewHolder<T> holder, int position) {
-            holder.populate(elementos.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return elementos.size();
-        }
-    }
-
     public static class PedidosAdapter extends DominoListAdapter<Pedido>{
-
         @Override
         public DominoViewHolder<Pedido> createViewHolder(View view) {
-            return new PedidoViewHolder(view);
+            return new PedidosActivity.PedidoViewHolder(view);
         }
-
-
-    }
-
-    public abstract static class DominoViewHolder<T> extends RecyclerView.ViewHolder{
-
-        public DominoViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        public abstract void populate(T t);
     }
 
     public static class PedidoViewHolder extends DominoViewHolder<Pedido>{
@@ -161,14 +123,14 @@ public class PedidosActivity extends AppCompatActivity {
         public PedidoViewHolder(View itemView) {
             super(itemView);
             this.nombre = itemView.findViewById(R.id.nombre);
-            this.direccion = itemView.findViewById(R.id.direccion);
+            this.direccion = itemView.findViewById(R.id.descripcion);
             this.precio = itemView.findViewById(R.id.precio);
         }
 
         public void populate(final Pedido pedido){
             nombre.setText(pedido.getNombre());
             direccion.setText(pedido.getDireccion());
-            precio.setText(NumberFormat.getCurrencyInstance().format(pedido.getMonto()));
+            TextUtils.setTextAsCurrency(precio, pedido.getMonto());
             this.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

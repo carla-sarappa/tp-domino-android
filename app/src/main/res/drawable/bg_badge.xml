@@ -3,4 +3,6 @@
     android:shape="rectangle">
     <solid android:color="#FF0DAB61"/>
     <corners android:radius="100dp"/>
+    <!-- Fuente:
+    https://stackoverflow.com/questions/28610635/android-drawable-with-perfect-round-corner-->
 </shape>

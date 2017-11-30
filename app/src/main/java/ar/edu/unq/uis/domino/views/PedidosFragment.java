@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public abstract class PedidosFragment extends Fragment {
-    private static final String DEFAULT_SERVER_URL = "http://192.168.0.5:9000";
+    private static final String DEFAULT_SERVER_URL = "http://192.168.137.1:9000";
 
     RecyclerView pedidosRecyclerView;
     PedidosAdapter pedidosAdapter;

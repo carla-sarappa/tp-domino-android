@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ar.edu.unq.uis.domino.views.EditTextPreference
-        android:defaultValue="http://192.168.0.5:9000"
+        android:defaultValue="http://192.168.137.1:9000"
         android:key="server_url"
         android:summary="URL: %s"
         android:selectAllOnFocus="true"

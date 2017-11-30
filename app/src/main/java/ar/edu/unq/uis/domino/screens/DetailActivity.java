@@ -25,6 +25,7 @@ public class DetailActivity extends AppCompatActivity {
     private Pedido pedido;
     private TextView tipoDeEnvio;
     private TextView descripcion;
+    private TextView aclaraciones;
     private TextView precio;
     private TextView total;
     private RecyclerView recyclerView;
@@ -44,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.platos);
         tipoDeEnvio = findViewById(R.id.nombre);
         descripcion = findViewById(R.id.descripcion);
+        aclaraciones = findViewById(R.id.aclaraciones);
         precio = findViewById(R.id.precio);
         total = findViewById(R.id.total);
     }
@@ -57,6 +59,7 @@ public class DetailActivity extends AppCompatActivity {
         tipoDeEnvio.setText(pedido.getFormaDeEnvio().getNombre().equals("delivery") ?
                 getString(R.string.delivery) : getString(R.string.retira));
         descripcion.setText(pedido.getFormaDeEnvio().getDireccion());
+        aclaraciones.setText(pedido.getAclaraciones());
         TextUtils.setTextAsCurrency(precio, pedido.getFormaDeEnvio().getCosto());
         TextUtils.setTextAsCurrency(total, pedido.getMonto());
     }

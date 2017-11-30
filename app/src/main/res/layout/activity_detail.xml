@@ -53,5 +53,30 @@
                 />
         </FrameLayout>
 
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#fff9c4"
+            android:layout_margin="10dp"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aclaraciones:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                 />
+
+            <TextView
+                android:id="@+id/aclaraciones"
+                tools:text="Probando las aclaraciones :)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                 />
+        </LinearLayout>
+
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

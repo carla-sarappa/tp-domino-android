@@ -11,6 +11,11 @@ public class Plato implements Serializable {
     Pizza pizza;
     List<IngredienteDistribuido> extras;
     Double monto;
+    Tamanio tamanio;
+
+    public String getTamanio() {
+        return tamanio.getNombre();
+    }
 
     public Pizza getPizza() {
         return pizza;

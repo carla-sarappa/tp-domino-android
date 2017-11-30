@@ -75,9 +75,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public static class PlatoViewHolder extends DominoViewHolder<Plato>{
+        TextView tamanio;
 
         public PlatoViewHolder(View itemView) {
             super(itemView);
+            this.tamanio = itemView.findViewById(R.id.tamanio);
         }
 
         // Tengo que setear a mano los valores porque no tengo binding
@@ -89,6 +91,8 @@ public class DetailActivity extends AppCompatActivity {
                     ", ",
                     " y "));
             TextUtils.setTextAsCurrency(precio, plato.getMonto());
+            tamanio.setVisibility(View.VISIBLE);
+            tamanio.setText(plato.getTamanio());
         }
     }
 }

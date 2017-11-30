@@ -12,12 +12,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/precio"
+        android:layout_toLeftOf="@id/tamanio"
         tools:text="Muzzarella"
         android:gravity="center_vertical"
         android:textSize="20sp"
         android:textStyle="bold"
         />
+    <TextView
+        android:id="@+id/tamanio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/precio"
+        tools:text="grande"
+        android:layout_marginRight="20dp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:visibility="invisible"
+        android:background="@drawable/bg_badge"/>
 
     <TextView
         android:id="@+id/descripcion"

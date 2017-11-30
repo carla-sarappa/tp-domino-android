@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -102,6 +103,7 @@ public abstract class PedidosFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Pedido>> call, Throwable t) {
                 Log.e("pedidosActivity", "getPedidos() failed", t);
+                Toast.makeText(getContext(), R.string.error_conexion, Toast.LENGTH_LONG).show();
             }
         });
     }

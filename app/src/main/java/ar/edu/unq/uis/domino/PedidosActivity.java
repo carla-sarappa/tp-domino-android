@@ -32,70 +32,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class PedidosActivity extends AppCompatActivity {
 
-    RecyclerView pedidosRecyclerView;
-    PedidosAdapter pedidosAdapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private View mensajeVacio;
-    protected PedidoService service;
+    public abstract int getLayout();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setUpPedidoService();
-        setContentView(R.layout.activity_main);
+        setContentView(getLayout());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.pedidosRecyclerView = findViewById(R.id.pedidos);
-        this.pedidosAdapter = new PedidosAdapter();
-        this.pedidosRecyclerView.setAdapter(pedidosAdapter);
-        this.pedidosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.mensajeVacio = findViewById(R.id.mensaje_vacio);
-        populateAdapter();
-        swipeRefreshLayout = findViewById(R.id.refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                populateAdapter();
-            }
-        });
     }
-
-
-    public String getServerUrl(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        return prefs.getString("server_url", "http://192.168.0.5:9000");
-    }
-
-
-
-    public void setUpPedidoService(){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getServerUrl())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        service = retrofit.create(PedidoService.class);
-    }
-    public void populateAdapter(){
-
-        getPedidos().enqueue(new Callback<List<Pedido>>() {
-            @Override
-            public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
-                pedidosAdapter.elementos = response.body();
-                mensajeVacio.setVisibility(pedidosAdapter.elementos.size() == 0 ? View.VISIBLE : View.GONE);
-                Log.d("PedidosActivity", "Cargados " + pedidosAdapter.elementos.size() + " pedidos");
-                pedidosAdapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Call<List<Pedido>> call, Throwable t) {
-                Log.e("pedidosActivity", "getPedidos() failed", t);
-            }
-        });
-    }
-
-    protected abstract Call<List<Pedido>> getPedidos();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,31 +61,7 @@ public abstract class PedidosActivity extends AppCompatActivity {
         }
     }
 
-    public static class PedidosAdapter extends DominoListAdapter<Pedido>{
-        @Override
-        public DominoViewHolder<Pedido> createViewHolder(View view) {
-            return new PedidosActivity.PedidoViewHolder(view);
-        }
-    }
 
-    public static class PedidoViewHolder extends DominoViewHolder<Pedido>{
 
-        public PedidoViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        public void populate(final Pedido pedido){
-            nombre.setText(pedido.getNombre());
-            descripcion.setText(pedido.getDireccion());
-            TextUtils.setTextAsCurrency(precio, pedido.getMonto());
-            this.itemView.setOnClickListener(view -> {
-                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(DetailActivity.PEDIDO, pedido);
-                intent.putExtras(bundle);
-                view.getContext().startActivity(intent);
-            });
-        }
-    }
 }
 

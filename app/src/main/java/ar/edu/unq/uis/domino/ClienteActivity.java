@@ -1,7 +1,9 @@
 package ar.edu.unq.uis.domino;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import java.util.List;
 
@@ -13,14 +15,32 @@ import retrofit2.Call;
  */
 
 public class ClienteActivity extends PedidosActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    public Integer getUserId(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        return Integer.valueOf(prefs.getString("user_id", "4"));
+        //https://developer.android.com/training/basics/fragments/fragment-ui.html
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container, new PedidosByIdFragment())
+                .commit();
     }
 
     @Override
-    protected Call<List<Pedido>> getPedidos() {
-        return service.getPedidos(getUserId());
+    public int getLayout() {
+        return R.layout.activity_main;
+    }
+
+    public static class PedidosByIdFragment extends PedidosFragment{
+
+        public Integer getUserId(){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+            return Integer.valueOf(prefs.getString("user_id", "4"));
+        }
+
+        @Override
+        protected Call<List<Pedido>> getPedidos() {
+            return service.getPedidos(getUserId());
+        }
     }
 }

@@ -60,6 +60,9 @@ public class DetailActivity extends AppCompatActivity {
                 getString(R.string.delivery) : getString(R.string.retira));
         descripcion.setText(pedido.getFormaDeEnvio().getDireccion());
         aclaraciones.setText(pedido.getAclaraciones());
+        if (pedido.getAclaraciones() == null || pedido.getAclaraciones().isEmpty()){
+            findViewById(R.id.aclaracionesContainer).setVisibility(View.GONE);
+        }
         TextUtils.setTextAsCurrency(precio, pedido.getFormaDeEnvio().getCosto());
         TextUtils.setTextAsCurrency(total, pedido.getMonto());
     }

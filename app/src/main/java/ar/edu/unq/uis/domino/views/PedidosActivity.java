@@ -1,30 +1,16 @@
-package ar.edu.unq.uis.domino;
+package ar.edu.unq.uis.domino.views;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
-import java.util.List;
-
-import ar.edu.unq.uis.domino.model.Pedido;
-import ar.edu.unq.uis.domino.services.PedidoService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import ar.edu.unq.uis.domino.R;
+import ar.edu.unq.uis.domino.screens.SettingsActivity;
 
 /**
  * Created by Carla Sarappa on 24/11/2017.
@@ -44,6 +30,7 @@ public abstract class PedidosActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Para que al clickear los tres puntitos se liste la opcion de settings
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;
@@ -51,6 +38,8 @@ public abstract class PedidosActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Para que al clickear la opcion de settings en los tres puntitos se abra
+        // la pantalla de settings
         switch (item.getItemId()){
             case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -60,8 +49,5 @@ public abstract class PedidosActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
 }
 

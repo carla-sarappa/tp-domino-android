@@ -1,9 +1,6 @@
-package ar.edu.unq.uis.domino;
+package ar.edu.unq.uis.domino.screens;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,11 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.unq.uis.domino.R;
 import ar.edu.unq.uis.domino.model.Pedido;
+import ar.edu.unq.uis.domino.views.PedidosActivity;
+import ar.edu.unq.uis.domino.views.PedidosFragment;
 import retrofit2.Call;
 
 /**
@@ -45,7 +44,7 @@ public class AdminActivity extends PedidosActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public static class PedidosEnViajeFragment extends PedidosFragment{
+    public static class PedidosEnViajeFragment extends PedidosFragment {
         @Override
         protected Call<List<Pedido>> getPedidos() {
             return service.getPedidos("EnViaje");
@@ -59,7 +58,7 @@ public class AdminActivity extends PedidosActivity {
         }
     }
 
-    // https://github.com/chrisbanes/cheesesquare
+    // Sacado de un ejemplo de https://github.com/chrisbanes/cheesesquare
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();

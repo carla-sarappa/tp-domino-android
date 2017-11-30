@@ -13,8 +13,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ar.edu.unq.uis.domino.PedidosActivity"
-        tools:showIn="@layout/activity_main">
+        tools:context="ar.edu.unq.uis.domino.views.PedidosActivity"
+        tools:showIn="@layout/activity_cliente">
 
         <FrameLayout
             android:layout_width="match_parent"

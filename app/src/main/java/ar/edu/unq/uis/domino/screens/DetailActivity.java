@@ -1,4 +1,4 @@
-package ar.edu.unq.uis.domino;
+package ar.edu.unq.uis.domino.screens;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import ar.edu.unq.uis.domino.R;
 import ar.edu.unq.uis.domino.model.Pedido;
 import ar.edu.unq.uis.domino.model.Plato;
+import ar.edu.unq.uis.domino.utils.TextUtils;
+import ar.edu.unq.uis.domino.views.DominoListAdapter;
+import ar.edu.unq.uis.domino.views.DominoViewHolder;
 
 /**
  * Created by Carla Sarappa on 27/11/2017.
@@ -57,7 +61,7 @@ public class DetailActivity extends AppCompatActivity {
         TextUtils.setTextAsCurrency(total, pedido.getMonto());
     }
 
-    public static class PlatoAdapter extends DominoListAdapter<Plato>{
+    public static class PlatoAdapter extends DominoListAdapter<Plato> {
         @Override
         public DominoViewHolder<Plato> createViewHolder(View view) {
             return new PlatoViewHolder(view);
@@ -70,6 +74,7 @@ public class DetailActivity extends AppCompatActivity {
             super(itemView);
         }
 
+        // Tengo que setear a mano los valores porque no tengo binding
         public void populate(final Plato plato){
             nombre.setText(plato.getPizza().getNombre());
             descripcion.setText(TextUtils.joinList(

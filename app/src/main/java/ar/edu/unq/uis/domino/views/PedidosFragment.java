@@ -1,4 +1,4 @@
-package ar.edu.unq.uis.domino;
+package ar.edu.unq.uis.domino.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,8 +16,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import ar.edu.unq.uis.domino.R;
 import ar.edu.unq.uis.domino.model.Pedido;
+import ar.edu.unq.uis.domino.screens.DetailActivity;
 import ar.edu.unq.uis.domino.services.PedidoService;
+import ar.edu.unq.uis.domino.utils.TextUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,12 +32,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public abstract class PedidosFragment extends Fragment {
+    private static final String DEFAULT_SERVER_URL = "http://192.168.0.5:9000";
+
     RecyclerView pedidosRecyclerView;
     PedidosAdapter pedidosAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View mensajeVacio;
     protected PedidoService service;
-
 
     @Nullable
     @Override
@@ -45,29 +49,36 @@ public abstract class PedidosFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.mensajeVacio = view.findViewById(R.id.mensaje_vacio);
         setUpPedidoService();
+        setUpRecyclerView(view);
+        populateAdapter();
+        refreshOnSwipe(view);
+    }
+
+    private void setUpRecyclerView(View view) {
+        // RecyclerView docs
+        // https://developer.android.com/training/material/lists-cards.html
+        // https://developer.android.com/guide/topics/ui/layout/recyclerview.html
+
         this.pedidosRecyclerView = view.findViewById(R.id.pedidos);
         this.pedidosAdapter = new PedidosAdapter();
         this.pedidosRecyclerView.setAdapter(pedidosAdapter);
         this.pedidosRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        this.mensajeVacio = view.findViewById(R.id.mensaje_vacio);
-        populateAdapter();
+    }
+
+    private void refreshOnSwipe(View view) {
         swipeRefreshLayout = view.findViewById(R.id.refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                populateAdapter();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::populateAdapter);
     }
 
     public String getServerUrl(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        return prefs.getString("server_url", "http://192.168.0.5:9000");
+        return prefs.getString("server_url", DEFAULT_SERVER_URL);
     }
 
-
     public void setUpPedidoService(){
+        // Ver http://square.github.io/retrofit/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -106,10 +117,11 @@ public abstract class PedidosFragment extends Fragment {
 
     public static class PedidoViewHolder extends DominoViewHolder<Pedido>{
 
-        public PedidoViewHolder(View itemView) {
+        PedidoViewHolder(View itemView) {
             super(itemView);
         }
 
+        // Tengo que setear a mano los valores porque no tengo binding
         public void populate(final Pedido pedido){
             nombre.setText(pedido.getNombre());
             descripcion.setText(pedido.getDireccion());

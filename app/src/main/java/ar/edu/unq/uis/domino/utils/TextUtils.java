@@ -1,8 +1,6 @@
-package ar.edu.unq.uis.domino;
+package ar.edu.unq.uis.domino.utils;
 
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -14,6 +12,11 @@ import kotlin.jvm.functions.Function1;
  */
 
 public class TextUtils {
+
+    // Estos serian como los transformers de Arena o los filters de Angular
+    // pero aca los tengo que llamar a mano, no puedo agregarlos en el binding
+    // o en el layout. Asi que los dejo como metodos estaticos para poder usarlos
+    // desde varios lugares
 
     public static void setTextAsCurrency(TextView textView, Double precio){
         textView.setText(NumberFormat.getCurrencyInstance().format(precio));

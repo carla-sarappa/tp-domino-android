@@ -10,12 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--
+        Para tener por separado los launchers del admin y del cliente
+        https://stackoverflow.com/questions/3270409/how-do-i-get-multiple-icons-to-launch-different-activities-in-one-application
+        -->
         <activity
-            android:name=".ClienteActivity"
+            android:name=".screens.ClienteActivity"
             android:label="Domino Client"
             android:theme="@style/AppTheme.NoActionBar"
-            android:taskAffinity="ar.edu.unq.uis.domino.ClienteActivity">
-            >
+            android:taskAffinity="ar.edu.unq.uis.domino.screens.ClienteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,10 +27,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AdminActivity"
+            android:name=".screens.AdminActivity"
             android:label="Domino Admin"
             android:theme="@style/AppTheme.NoActionBar"
-            android:taskAffinity="ar.edu.unq.uis.domino.AdminActivity">
+            android:taskAffinity="ar.edu.unq.uis.domino.screens.AdminActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,12 +38,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".screens.SettingsActivity"
             android:label="Settings"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".DetailActivity"
+            android:name=".screens.DetailActivity"
             android:label="Detail"
             android:theme="@style/AppTheme">
         </activity>

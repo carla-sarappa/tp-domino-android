@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".PedidosActivity"
+            android:name=".ClienteActivity"
             android:label="Domino Client"
             android:theme="@style/AppTheme.NoActionBar"
-            android:taskAffinity="ar.edu.unq.uis.domino.PedidosActivity">
+            android:taskAffinity="ar.edu.unq.uis.domino.ClienteActivity">
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

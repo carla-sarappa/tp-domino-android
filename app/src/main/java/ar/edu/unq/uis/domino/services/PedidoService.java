@@ -15,5 +15,8 @@ public interface PedidoService {
     @GET("/pedidos")
     Call<List<Pedido>> getPedidos(@Query("userId") Integer userId);
 
+    @GET("/pedidos")
+    Call<List<Pedido>> getPedidos(@Query("estado") String estado);
+
 
 }

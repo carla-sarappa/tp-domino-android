@@ -30,16 +30,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Carla Sarappa on 24/11/2017.
  */
 
-public class PedidosActivity extends AppCompatActivity {
+public abstract class PedidosActivity extends AppCompatActivity {
 
     RecyclerView pedidosRecyclerView;
     PedidosAdapter pedidosAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View mensajeVacio;
+    protected PedidoService service;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpPedidoService();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,18 +60,25 @@ public class PedidosActivity extends AppCompatActivity {
         });
     }
 
-    public void populateAdapter(){
+
+    public String getServerUrl(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String url = prefs.getString("server_url", "http://192.168.0.5:9000");
-        Integer userId = Integer.valueOf(prefs.getString("user_id", "4"));
-        Log.d("PedidosActivity", "Buscando pedidos de user " + userId + " en " + url);
+        return prefs.getString("server_url", "http://192.168.0.5:9000");
+    }
+
+
+
+    public void setUpPedidoService(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(getServerUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        PedidoService service = retrofit.create(PedidoService.class);
-        service.getPedidos(userId).enqueue(new Callback<List<Pedido>>() {
+        service = retrofit.create(PedidoService.class);
+    }
+    public void populateAdapter(){
+
+        getPedidos().enqueue(new Callback<List<Pedido>>() {
             @Override
             public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
                 pedidosAdapter.elementos = response.body();
@@ -85,6 +94,8 @@ public class PedidosActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected abstract Call<List<Pedido>> getPedidos();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
